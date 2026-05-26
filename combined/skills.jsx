@@ -47,10 +47,10 @@ const _roundRect = (ctx, x, y, w, h, r) => {
 // Returns array of { x, y, r } in world coords
 const buildCloud = (cx, cy, textWidth) => {
 	// Target how wide the cloud LOOKS (text + small margin on each side)
-	const visualW = textWidth + 32;
-	const midR    = Math.round(visualW * 0.055);
-	const topR    = Math.round(midR * 0.72);
-	const botR    = Math.round(midR * 0.58);
+	const visualW = textWidth + 28;
+	const midR    = Math.round(visualW * 0.135);
+	const topR    = Math.round(midR * 0.90);   // bigger top bumps (was 0.72)
+	const botR    = Math.round(midR * 0.74);   // bigger bottom bumps (was 0.58)
 	const cw      = visualW - 2 * midR;
 	const circles = [];
 
@@ -61,20 +61,20 @@ const buildCloud = (cx, cy, textWidth) => {
 		circles.push({ x: cx - cw / 2 + cw * t, y: cy, r: midR });
 	}
 
-	// Top bumps
-	const topSpan = cw * 0.92;
-	const topN    = Math.round(topSpan / (topR * 1.9));
+	// Top bumps — wider span, larger radius
+	const topSpan = cw * 0.96;
+	const topN    = Math.round(topSpan / (topR * 1.85));
 	for (let i = 0; i < topN; i++) {
 		const t = topN === 1 ? 0.5 : i / (topN - 1);
-		circles.push({ x: cx - topSpan / 2 + topSpan * t, y: cy - midR * 0.68, r: topR });
+		circles.push({ x: cx - topSpan / 2 + topSpan * t, y: cy - midR * 0.72, r: topR });
 	}
 
-	// Bottom bumps
-	const botSpan = cw * 0.75;
-	const botN    = Math.round(botSpan / (botR * 1.95));
+	// Bottom bumps — wider span, larger radius
+	const botSpan = cw * 0.82;
+	const botN    = Math.round(botSpan / (botR * 1.88));
 	for (let i = 0; i < botN; i++) {
 		const t = botN === 1 ? 0.5 : i / (botN - 1);
-		circles.push({ x: cx - botSpan / 2 + botSpan * t, y: cy + midR * 0.62, r: botR });
+		circles.push({ x: cx - botSpan / 2 + botSpan * t, y: cy + midR * 0.66, r: botR });
 	}
 
 	return circles;
