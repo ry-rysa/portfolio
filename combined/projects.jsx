@@ -54,8 +54,8 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 			{/* Icon + pill — blurred when another card is hovered */}
 			<div style={{
 				display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-				filter: isBlurred ? 'blur(1.5px)' : 'none',
-				opacity: isBlurred ? 0.55 : 1,
+				filter: isBlurred ? 'blur(0.7px)' : 'none',
+				opacity: isBlurred ? 0.75 : 1,
 				transition: 'filter 0.3s, opacity 0.3s',
 			}}>
 				<div style={{
@@ -289,7 +289,7 @@ const Projects = () => {
 							inView={gridInView}
 							isMobile={isMobile}
 							isHovered={hoveredId === item.id}
-							isBlurred={isMobile ? hoveredId !== null : (hoveredId !== null && hoveredId !== item.id)}
+							isBlurred={hoveredId !== null}
 							onEnter={() => !isMobile && setHoveredId(item.id)}
 							onLeave={() => !isMobile && setHoveredId(null)}
 							onTap={() => setHoveredId(hoveredId === item.id ? null : item.id)}
