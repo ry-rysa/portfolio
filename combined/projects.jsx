@@ -35,7 +35,7 @@ const Projects = () => {
 	const filtered = selected === 'All' ? PROJECTS : PROJECTS.filter(p => p.tags.includes(selected));
 
 	return (
-		<section id="projects" style={{ padding: isMobile ? '60px 20px 80px' : '80px 54px 100px' }}>
+		<section id="projects" style={{ padding: isMobile ? '60px 20px 120px' : '80px 54px 160px' }}>
 			<div style={{ maxWidth: 1160, margin: '0 auto' }}>
 				<h2 ref={headingRef} style={{
 					textAlign: 'center', margin: '0 0 40px',
@@ -46,11 +46,11 @@ const Projects = () => {
 					transform: headingInView ? 'none' : 'translateY(18px)',
 					transition: 'opacity 0.55s ease, transform 0.55s ease',
 				}}>
-					Selected Work <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 400, letterSpacing: 0 }}>:)</span>
+					Projects <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 400, letterSpacing: 0 }}>:)</span>
 				</h2>
 
 				{/* Dropdown */}
-				<div style={{ display: 'flex', justifyContent: 'center', marginBottom: isMobile ? 48 : 72 }}>
+				<div style={{ display: 'flex', justifyContent: 'center', marginBottom: isMobile ? 64 : 100 }}>
 					<div ref={dropRef} style={{ position: 'relative' }}>
 						<button
 							onClick={() => setOpen(o => !o)}
@@ -105,7 +105,7 @@ const Projects = () => {
 				{/* Project grid — fixed height so filtering never shifts the page */}
 				<div ref={gridRef} style={{
 					display: 'grid',
-					gridTemplateColumns: isTablet ? 'repeat(2, 1fr)' : `repeat(4, ${ITEM_W}px)`,
+					gridTemplateColumns: isTablet ? 'repeat(2, 1fr)' : `repeat(3, ${ITEM_W}px)`,
 					gap: isTablet ? '40px 20px' : `96px ${ITEM_GAP}px`,
 					justifyContent: 'center',
 					minHeight: isTablet ? undefined : 600,

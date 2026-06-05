@@ -25,17 +25,27 @@ const ONGOING_WORK = [
 	},
 ];
 
-const OngoingCard = ({ item }) => {
+const OngoingCard = ({ item, index }) => {
 	const [hov,  setHov]  = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [text, setText] = React.useState('');
 	const [sent, setSent] = React.useState(false);
+	const [peek, setPeek] = React.useState(false);
+	const [cardRef, cardInView] = useInView(0.3);
 	const { isMobile, isTablet } = useResponsive();
 	const ease      = '.85s cubic-bezier(.34,1.1,.64,1)';
 	const cardH     = isMobile ? 260 : 490;
 	const layerH    = isMobile ? 205 : 390;
 	const shiftX    = isMobile ? '30px' : '45px';
 	const shiftY    = isMobile ? '55px' : '80px';
+
+	React.useEffect(() => {
+		if (!cardInView) return;
+		const delay = index * 300;
+		const t1 = setTimeout(() => setPeek(true),  delay);
+		const t2 = setTimeout(() => setPeek(false), delay + 2000);
+		return () => { clearTimeout(t1); clearTimeout(t2); };
+	}, [cardInView]);
 
 	const handleSend = () => {
 		if (!text.trim()) return;
@@ -45,10 +55,11 @@ const OngoingCard = ({ item }) => {
 		setTimeout(() => { setSent(false); setOpen(false); setText(''); }, 2000);
 	};
 
-	const active = hov && !open;
+	const active = (hov || peek) && !open;
 
 	return (
 		<div
+			ref={cardRef}
 			onMouseEnter={() => setHov(true)}
 			onMouseLeave={() => setHov(false)}
 			style={{ position: 'relative', height: cardH, cursor: 'default' }}
@@ -181,7 +192,7 @@ const OngoingWork = () => {
 						transform: cardsInView ? 'none' : 'translateY(28px)',
 						transition: `opacity 0.6s ease ${i * 0.15}s, transform 0.6s ease ${i * 0.15}s`,
 					}}>
-						<OngoingCard item={item} />
+						<OngoingCard item={item} index={i} />
 					</div>
 				))}
 			</div>

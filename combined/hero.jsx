@@ -381,7 +381,7 @@ const Hero = () => {
 	const [aboutRef, aboutInView] = useInView(0.08);
 	return (
 		<section style={{
-			padding: isTablet ? '60px 20px 0' : '112px 54px 0',
+			padding: isTablet ? '90px 20px 0' : '150px 54px 0',
 			display: 'flex', flexDirection: 'column', alignItems: 'center',
 			position: 'relative',
 		}}>
@@ -442,7 +442,7 @@ const Hero = () => {
 			</div>
 
 			{/* Chevron + project cards */}
-			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? 320 : isTablet ? 440 : 760, padding: isMobile ? '80px 0' : isTablet ? '100px 0' : '220px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? 320 : isTablet ? 440 : 760, padding: isMobile ? '50px 0' : isTablet ? '68px 0' : '155px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
 				<button
 					onClick={() => setOpen(o => !o)}
 					style={{
