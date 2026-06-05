@@ -54,9 +54,9 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 			{/* Icon + pill — blurred when another card is hovered */}
 			<div style={{
 				display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-				filter: 'none',
-				opacity: isBlurred ? 0.85 : 1,
-				transition: 'filter 0.3s, opacity 0.3s',
+				filter: isBlurred ? 'blur(2.5px)' : 'none',
+				opacity: isBlurred ? 0.5 : 1,
+				transition: 'filter 0.45s ease, opacity 0.45s ease',
 			}}>
 				<div style={{
 					width: iconW, aspectRatio: '1',
