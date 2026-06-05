@@ -54,8 +54,8 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 			{/* Icon + pill — blurred when another card is hovered */}
 			<div style={{
 				display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-				filter: isBlurred ? 'blur(0.7px)' : 'none',
-				opacity: isBlurred ? 0.75 : 1,
+				filter: 'none',
+				opacity: isBlurred ? 0.85 : 1,
 				transition: 'filter 0.3s, opacity 0.3s',
 			}}>
 				<div style={{
@@ -182,6 +182,13 @@ const Projects = () => {
 		document.addEventListener('mousedown', handler);
 		return () => document.removeEventListener('mousedown', handler);
 	}, []);
+
+	React.useEffect(() => {
+		if (!hoveredId) return;
+		const onScroll = () => setHoveredId(null);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	}, [hoveredId]);
 
 	const filtered = selected === 'All' ? PROJECTS : PROJECTS.filter(p => p.tags.includes(selected));
 
