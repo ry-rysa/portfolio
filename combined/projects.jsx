@@ -20,7 +20,7 @@ const Projects = () => {
 	const [selected, setSelected] = React.useState('All');
 	const [open, setOpen]         = React.useState(false);
 	const dropRef                 = React.useRef(null);
-	const { isMobile }            = useResponsive();
+	const { isMobile, isTablet }  = useResponsive();
 	const [headingRef, headingInView] = useInView(0.3);
 	const [gridRef, gridInView]       = useInView(0.05);
 
@@ -105,10 +105,10 @@ const Projects = () => {
 				{/* Project grid — fixed height so filtering never shifts the page */}
 				<div ref={gridRef} style={{
 					display: 'grid',
-					gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : `repeat(4, ${ITEM_W}px)`,
-					gap: isMobile ? '40px 20px' : `96px ${ITEM_GAP}px`,
+					gridTemplateColumns: isTablet ? 'repeat(2, 1fr)' : `repeat(4, ${ITEM_W}px)`,
+					gap: isTablet ? '40px 20px' : `96px ${ITEM_GAP}px`,
 					justifyContent: 'center',
-					minHeight: isMobile ? undefined : 600,
+					minHeight: isTablet ? undefined : 600,
 					alignContent: 'flex-start',
 				}}>
 					{filtered.map((item, i) => (
@@ -120,17 +120,17 @@ const Projects = () => {
 							transition: `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s`,
 						}}>
 							<div style={{
-								width: isMobile ? '80%' : ICON_SIZE,
+								width: isTablet ? '72%' : ICON_SIZE,
 								aspectRatio: '1',
 								borderRadius: ICON_RADIUS,
 								background: 'var(--surface)',
 								border: '1px solid var(--rule)',
 							}} />
 							<span style={{
-								fontSize: isMobile ? 12 : 14, color: 'var(--mute)',
+								fontSize: isTablet ? 12 : 14, color: 'var(--mute)',
 								fontFamily: 'var(--sans)', fontWeight: 400,
 								background: 'var(--card)', border: '1px solid var(--rule)',
-								borderRadius: 999, padding: isMobile ? '4px 10px' : '5px 14px',
+								borderRadius: 999, padding: isTablet ? '4px 10px' : '5px 14px',
 								whiteSpace: 'nowrap',
 							}}>
 								{item.title}

@@ -141,7 +141,14 @@ const ThreeCharacter = ({ url }) => {
 			mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 			lastMouseMove = performance.now();
 		};
+		const onTouchMove = (e) => {
+			const t = e.touches[0];
+			mouse.x =  (t.clientX / window.innerWidth)  * 2 - 1;
+			mouse.y = -(t.clientY / window.innerHeight) * 2 + 1;
+			lastMouseMove = performance.now();
+		};
 		window.addEventListener('mousemove', onMouseMove);
+		window.addEventListener('touchmove', onTouchMove, { passive: true });
 
 		const loader = new THREE.GLTFLoader();
 		loader.load(url, (gltf) => {
@@ -231,6 +238,7 @@ const ThreeCharacter = ({ url }) => {
 			visObs.disconnect();
 			window.removeEventListener('resize', onResize);
 			window.removeEventListener('mousemove', onMouseMove);
+			window.removeEventListener('touchmove', onTouchMove);
 			if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
 			renderer.dispose();
 		};
