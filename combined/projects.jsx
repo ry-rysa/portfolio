@@ -29,8 +29,9 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 		const ow = Math.min(200, window.innerWidth - 20);
 		let left = rect.left + rect.width / 2 - ow / 2;
 		left = Math.max(8, Math.min(window.innerWidth - ow - 8, left));
-		const above = rect.top - 310;
-		const top = above > 10 ? above : rect.bottom + 10;
+		const overlayH = 295;
+		let top = rect.top + rect.height / 2 - overlayH / 2;
+		top = Math.max(8, Math.min(window.innerHeight - overlayH - 8, top));
 		setMobilePos({ top, left, width: ow });
 	}, [isHovered, isMobile]);
 
@@ -53,8 +54,8 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 			{/* Icon + pill — blurred when another card is hovered */}
 			<div style={{
 				display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-				filter: isBlurred ? 'blur(3px)' : 'none',
-				opacity: isBlurred ? 0.3 : 1,
+				filter: isBlurred ? 'blur(1.5px)' : 'none',
+				opacity: isBlurred ? 0.55 : 1,
 				transition: 'filter 0.3s, opacity 0.3s',
 			}}>
 				<div style={{
@@ -288,7 +289,7 @@ const Projects = () => {
 							inView={gridInView}
 							isMobile={isMobile}
 							isHovered={hoveredId === item.id}
-							isBlurred={hoveredId !== null && hoveredId !== item.id}
+							isBlurred={isMobile ? hoveredId !== null : (hoveredId !== null && hoveredId !== item.id)}
 							onEnter={() => !isMobile && setHoveredId(item.id)}
 							onLeave={() => !isMobile && setHoveredId(null)}
 							onTap={() => setHoveredId(hoveredId === item.id ? null : item.id)}
