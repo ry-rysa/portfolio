@@ -108,7 +108,7 @@ const ThreeCharacter = ({ url }) => {
 
 		const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		renderer.setSize(w, h);
-		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 		renderer.outputEncoding = THREE.sRGBEncoding;
 		mount.appendChild(renderer.domElement);
 
