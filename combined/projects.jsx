@@ -202,9 +202,6 @@ const Projects = () => {
 					onClick={() => setHoveredId(null)}
 					style={{
 						position: 'fixed', inset: 0, zIndex: 999,
-						background: 'rgba(0,0,0,0.15)',
-						backdropFilter: 'blur(14px)',
-						WebkitBackdropFilter: 'blur(14px)',
 					}}
 				/>
 			)}
