@@ -165,6 +165,7 @@ const ThreeCharacter = ({ url }) => {
 				-center.z * scale,
 			);
 			scene.add(model);
+			window.dispatchEvent(new CustomEvent('character-loaded'));
 
 			// Find shallowest bone with "head" in name
 			let bestDepth = Infinity;
@@ -585,4 +586,61 @@ const SectionHeader = ({ eyebrow, title, right }) => (
 	</div>
 );
 
-Object.assign(window, { Nav, Hero, Focus, SectionHeader });
+const Loader = () => {
+	const [fading, setFading] = React.useState(false);
+	const [gone,   setGone]   = React.useState(false);
+
+	React.useEffect(() => {
+		let loaded = false;
+		let elapsed = false;
+
+		const tryHide = () => {
+			if (!loaded || !elapsed) return;
+			setFading(true);
+			setTimeout(() => setGone(true), 700);
+		};
+
+		const onLoaded = () => { loaded = true; tryHide(); };
+		const onTimer  = () => { elapsed = true; tryHide(); };
+
+		window.addEventListener('character-loaded', onLoaded, { once: true });
+		const t = setTimeout(onTimer, 3000);
+		const fallback = setTimeout(() => { loaded = true; elapsed = true; tryHide(); }, 8000);
+
+		return () => {
+			window.removeEventListener('character-loaded', onLoaded);
+			clearTimeout(t);
+			clearTimeout(fallback);
+		};
+	}, []);
+
+	if (gone) return null;
+
+	return (
+		<div style={{
+			position: 'fixed', inset: 0, zIndex: 9999,
+			background: 'var(--paper)',
+			display: 'flex',
+			alignItems: 'center', justifyContent: 'center', gap: 8,
+			opacity: fading ? 0 : 1,
+			transition: 'opacity 0.7s ease',
+			pointerEvents: fading ? 'none' : 'all',
+		}}>
+			{[0, 1, 2].map(i => (
+				<div key={i} style={{
+					width: 7, height: 7, borderRadius: '50%',
+					background: 'var(--ink)',
+					animation: `loader-bounce 1.1s ease-in-out ${i * 0.18}s infinite`,
+				}} />
+			))}
+			<style>{`
+				@keyframes loader-bounce {
+					0%, 60%, 100% { transform: translateY(0); opacity: 0.25; }
+					30% { transform: translateY(-10px); opacity: 1; }
+				}
+			`}</style>
+		</div>
+	);
+};
+
+Object.assign(window, { Nav, Hero, Focus, SectionHeader, Loader });
