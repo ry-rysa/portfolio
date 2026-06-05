@@ -18,7 +18,7 @@ const ITEM_W      = 210;
 
 const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inView, index, isMobile }) => {
 	const { isTablet } = useResponsive();
-	const iconW = isTablet ? '72%' : ICON_SIZE;
+	const iconW = isMobile ? 100 : isTablet ? 120 : ICON_SIZE;
 
 	return (
 		<div
