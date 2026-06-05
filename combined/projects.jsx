@@ -19,9 +19,24 @@ const ITEM_W      = 210;
 const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inView, index, isMobile }) => {
 	const { isTablet } = useResponsive();
 	const iconW = isMobile ? 100 : isTablet ? 120 : ICON_SIZE;
+	const cardRef = React.useRef(null);
+	const [mobilePos, setMobilePos] = React.useState(null);
+
+	React.useEffect(() => {
+		if (!isHovered || !isMobile) { setMobilePos(null); return; }
+		if (!cardRef.current) return;
+		const rect = cardRef.current.getBoundingClientRect();
+		const ow = Math.min(200, window.innerWidth - 20);
+		let left = rect.left + rect.width / 2 - ow / 2;
+		left = Math.max(8, Math.min(window.innerWidth - ow - 8, left));
+		const above = rect.top - 310;
+		const top = above > 10 ? above : rect.bottom + 10;
+		setMobilePos({ top, left, width: ow });
+	}, [isHovered, isMobile]);
 
 	return (
 		<div
+			ref={cardRef}
 			onMouseEnter={onEnter}
 			onMouseLeave={onLeave}
 			onClick={isMobile ? onTap : undefined}
@@ -60,28 +75,27 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 			</div>
 
 			{/* Hover overlay */}
-			{isHovered && (
+			{isHovered && (!isMobile || mobilePos) && (
 				<div style={{
 					position: isMobile ? 'fixed' : 'absolute',
 					...(isMobile
-						? { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
-						: { top: '-80px', left: '50%', transform: 'translateX(-50%)' }
+						? { top: mobilePos.top, left: mobilePos.left, transform: 'none', width: mobilePos.width }
+						: { top: '-80px', left: '50%', transform: 'translateX(-50%)', width: 300 }
 					),
-					width: isMobile ? 'min(300px, 85vw)' : 300,
 					padding: '0 4px',
 					zIndex: 1000,
-					animation: isMobile ? 'card-pop-center 0.22s cubic-bezier(.34,1.4,.64,1)' : 'card-pop 0.2s cubic-bezier(.34,1.4,.64,1)',
+					animation: isMobile ? 'card-pop-mobile 0.22s cubic-bezier(.34,1.4,.64,1)' : 'card-pop 0.2s cubic-bezier(.34,1.4,.64,1)',
 				}}>
 					{/* 2 stacked screenshots */}
-					<div style={{ position: 'relative', height: 170, marginBottom: 18, display: 'flex', justifyContent: 'center' }}>
+					<div style={{ position: 'relative', height: isMobile ? 120 : 170, marginBottom: isMobile ? 12 : 18, display: 'flex', justifyContent: 'center' }}>
 						{/* Back card */}
 						<div style={{
 							position: 'absolute',
-							width: 130, height: 158,
-							borderRadius: 18,
+							width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
+							borderRadius: isMobile ? 13 : 18,
 							background: `linear-gradient(150deg, ${item.color2}, ${item.color1})`,
 							boxShadow: '0 8px 28px rgba(0,0,0,0.13)',
-							transform: 'rotate(-10deg) translateX(-34px) translateY(8px)',
+							transform: `rotate(-10deg) translateX(${isMobile ? '-22px' : '-34px'}) translateY(${isMobile ? '5px' : '8px'})`,
 							overflow: 'hidden',
 						}}>
 							<div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.25)', borderBottom: '1px solid rgba(255,255,255,0.2)' }} />
@@ -89,41 +103,41 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 						{/* Front card */}
 						<div style={{
 							position: 'absolute',
-							width: 130, height: 158,
-							borderRadius: 18,
+							width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
+							borderRadius: isMobile ? 13 : 18,
 							background: `linear-gradient(150deg, ${item.color1}, #fff)`,
 							boxShadow: '0 10px 32px rgba(0,0,0,0.15)',
-							transform: 'rotate(6deg) translateX(34px)',
+							transform: `rotate(6deg) translateX(${isMobile ? '22px' : '34px'})`,
 							overflow: 'hidden',
 						}}>
 							<div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(0,0,0,0.05)' }} />
-							<div style={{ margin: '10px 14px 0', display: 'flex', flexDirection: 'column', gap: 7 }}>
-								{[70, 50, 60].map((w, i) => <div key={i} style={{ height: 6, width: `${w}%`, borderRadius: 4, background: 'rgba(0,0,0,0.08)' }} />)}
+							<div style={{ margin: isMobile ? '7px 10px 0' : '10px 14px 0', display: 'flex', flexDirection: 'column', gap: isMobile ? 5 : 7 }}>
+								{[70, 50, 60].map((w, i) => <div key={i} style={{ height: isMobile ? 5 : 6, width: `${w}%`, borderRadius: 4, background: 'rgba(0,0,0,0.08)' }} />)}
 							</div>
 						</div>
 					</div>
 
 					{/* Icon */}
 					<div style={{
-						width: 52, height: 52,
-						borderRadius: 14,
+						width: isMobile ? 36 : 52, height: isMobile ? 36 : 52,
+						borderRadius: isMobile ? 10 : 14,
 						background: `linear-gradient(135deg, ${item.color1}, ${item.color2})`,
 						border: '1px solid var(--rule)',
-						margin: '0 auto 10px',
+						margin: '0 auto 8px',
 					}} />
 
 					{/* Title */}
 					<div style={{
-						fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 17,
+						fontFamily: 'var(--sans)', fontWeight: 600, fontSize: isMobile ? 14 : 17,
 						color: 'var(--ink)', textAlign: 'center',
-						letterSpacing: '-0.01em', marginBottom: 7,
+						letterSpacing: '-0.01em', marginBottom: isMobile ? 5 : 7,
 					}}>{item.title}</div>
 
 					{/* Description */}
 					<div style={{
-						fontFamily: 'var(--sans)', fontSize: 13,
+						fontFamily: 'var(--sans)', fontSize: isMobile ? 11 : 13,
 						color: 'var(--mute)', textAlign: 'center',
-						lineHeight: 1.6, marginBottom: 16,
+						lineHeight: 1.5, marginBottom: isMobile ? 10 : 16,
 					}}>{item.desc}</div>
 
 					{/* View button */}
@@ -134,14 +148,15 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 							rel="noopener noreferrer"
 							style={{
 								display: 'inline-block',
-								fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 500,
+								fontFamily: 'var(--sans)', fontSize: isMobile ? 11 : 13, fontWeight: 500,
 								color: 'var(--ink)',
 								border: '1px solid var(--rule)', borderRadius: 999,
-								padding: '8px 20px', textDecoration: 'none',
+								padding: isMobile ? '6px 14px' : '8px 20px', textDecoration: 'none',
+								background: 'var(--card)',
 								transition: 'background .15s',
 							}}
 							onMouseEnter={e => e.currentTarget.style.background = 'var(--surface)'}
-							onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+							onMouseLeave={e => e.currentTarget.style.background = 'var(--card)'}
 						>View →</a>
 					</div>
 				</div>
@@ -176,9 +191,9 @@ const Projects = () => {
 					from { opacity: 0; transform: translateX(-50%) scale(0.92); }
 					to   { opacity: 1; transform: translateX(-50%) scale(1); }
 				}
-				@keyframes card-pop-center {
-					from { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
-					to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+				@keyframes card-pop-mobile {
+					from { opacity: 0; transform: scale(0.88) translateY(8px); }
+					to   { opacity: 1; transform: scale(1) translateY(0); }
 				}
 			`}</style>
 			{/* Mobile backdrop */}
@@ -187,8 +202,9 @@ const Projects = () => {
 					onClick={() => setHoveredId(null)}
 					style={{
 						position: 'fixed', inset: 0, zIndex: 999,
-						background: 'rgba(0,0,0,0.35)',
-						backdropFilter: 'blur(2px)',
+						background: 'rgba(0,0,0,0.15)',
+						backdropFilter: 'blur(14px)',
+						WebkitBackdropFilter: 'blur(14px)',
 					}}
 				/>
 			)}
