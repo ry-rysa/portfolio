@@ -337,4 +337,72 @@ const TechSkills = () => {
 	);
 };
 
-Object.assign(window, { TechSkills });
+const TICKER_ROWS = [
+	{ label: 'Programming Languages', items: ['TypeScript', 'JavaScript', 'Python', 'Java', 'Golang', 'C++', 'SQL', 'HTML / CSS'], speed: 28, rev: false },
+	{ label: 'Frameworks & Libraries', items: ['React', 'React Native', 'Next.js', 'Node.js', 'Express.js', 'Vue.js', 'Flask', 'Tailwind CSS'], speed: 34, rev: true  },
+	{ label: 'Databases & Tools',      items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Supabase', 'Prisma', 'Docker', 'Git', 'Figma', 'AWS'],         speed: 30, rev: false },
+];
+
+const SkillTicker = () => {
+	React.useEffect(() => {
+		if (document.getElementById('ticker-kf')) return;
+		const s = document.createElement('style');
+		s.id = 'ticker-kf';
+		s.textContent = `
+			@keyframes ticker-ltr { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+			@keyframes ticker-rtl { from { transform: translateX(-50%) } to { transform: translateX(0) } }
+		`;
+		document.head.appendChild(s);
+	}, []);
+
+	return (
+		<section style={{ borderTop: '1px solid var(--rule)' }}>
+			{TICKER_ROWS.map((row, ri) => (
+				<div key={ri} style={{
+					display: 'flex', alignItems: 'center',
+					borderBottom: '1px solid var(--rule)',
+					minHeight: 66,
+				}}>
+					{/* Fixed label */}
+					<div style={{
+						width: 230, flexShrink: 0,
+						padding: '0 28px',
+						fontFamily: 'var(--sans)', fontSize: 12,
+						color: 'var(--mute)', letterSpacing: '0.08em',
+						textTransform: 'uppercase', fontWeight: 500,
+					}}>{row.label}</div>
+
+					{/* Divider */}
+					<div style={{ width: 1, alignSelf: 'stretch', background: 'var(--rule)', flexShrink: 0 }} />
+
+					{/* Scrolling track */}
+					<div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+						<div style={{
+							position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+							background: 'linear-gradient(to right, var(--paper) 0%, transparent 60px, transparent calc(100% - 60px), var(--paper) 100%)',
+						}} />
+						<div style={{
+							display: 'flex', alignItems: 'center',
+							animation: `ticker-${row.rev ? 'rtl' : 'ltr'} ${row.speed}s linear infinite`,
+							width: 'max-content',
+						}}>
+							{[...row.items, ...row.items].map((item, i) => (
+								<span key={i} style={{
+									display: 'flex', alignItems: 'center', gap: 20,
+									padding: '0 20px',
+									fontFamily: 'var(--sans)', fontSize: 15,
+									color: 'var(--ink)', whiteSpace: 'nowrap',
+								}}>
+									{item}
+									<span style={{ color: 'var(--rule)', fontSize: 16, lineHeight: 1 }}>·</span>
+								</span>
+							))}
+						</div>
+					</div>
+				</div>
+			))}
+		</section>
+	);
+};
+
+Object.assign(window, { TechSkills, SkillTicker });

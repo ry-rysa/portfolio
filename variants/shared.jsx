@@ -153,4 +153,30 @@ const PlaceholderArt = ({ seed = "x", variant = "stripes" }) => {
 	);
 };
 
-Object.assign(window, { PROJECTS, NOW_ITEMS, SOCIALS, useLocalClock, PlaceholderArt });
+const useInView = (threshold = 0.12) => {
+	const ref = React.useRef(null);
+	const [inView, setInView] = React.useState(false);
+	React.useEffect(() => {
+		const el = ref.current;
+		if (!el) return;
+		const obs = new IntersectionObserver(
+			([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
+			{ threshold }
+		);
+		obs.observe(el);
+		return () => obs.disconnect();
+	}, []);
+	return [ref, inView];
+};
+
+const useResponsive = () => {
+	const [width, setWidth] = React.useState(window.innerWidth);
+	React.useEffect(() => {
+		const handler = () => setWidth(window.innerWidth);
+		window.addEventListener('resize', handler, { passive: true });
+		return () => window.removeEventListener('resize', handler);
+	}, []);
+	return { isMobile: width < 640, isTablet: width < 1024, width };
+};
+
+Object.assign(window, { PROJECTS, NOW_ITEMS, SOCIALS, useLocalClock, PlaceholderArt, useResponsive, useInView });

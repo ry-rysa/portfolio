@@ -1,123 +1,207 @@
-// Contact + Footer — clean, white, minimal
+const SOCIAL_LINKS = [
+	{ label: 'GitHub',   icon: 'assets/github.png',   href: 'https://github.com/ry-rysa' },
+	{ label: 'LinkedIn', icon: 'assets/linkedin.png', href: 'https://www.linkedin.com/in/ersya-saskia' },
+	{ label: 'Email',    icon: 'assets/email.png',    href: 'mailto:saskiarysa@gmail.com' },
+];
 
 const Contact = () => {
-	const [pos, setPos] = React.useState({ x: 0, y: 0 });
-	const ref = React.useRef(null);
+	const [subject, setSubject] = React.useState('');
+	const [message, setMessage] = React.useState('');
+	const [focusedField, setFocusedField] = React.useState(null);
+	const { isMobile } = useResponsive();
+	const [leftRef,  leftInView]  = useInView(0.2);
+	const [rightRef, rightInView] = useInView(0.2);
 
-	const onMove = (e) => {
-		if (!ref.current) return;
-		const r = ref.current.getBoundingClientRect();
-		const cx = r.left + r.width / 2;
-		const cy = r.top + r.height / 2;
-		setPos({ x: (e.clientX - cx) * 0.05, y: (e.clientY - cy) * 0.05 });
+	const handleSend = () => {
+		const href = `mailto:saskiarysa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+		window.location.href = href;
 	};
-	const reset = () => setPos({ x: 0, y: 0 });
+
+	const fieldStyle = (name) => ({
+		width: '100%', padding: '11px 14px',
+		border: `1px solid ${focusedField === name ? 'var(--ink)' : 'var(--rule)'}`,
+		borderRadius: 10, fontSize: 17,
+		fontFamily: 'var(--sans)', color: 'var(--ink)',
+		background: 'var(--card)', outline: 'none',
+		boxSizing: 'border-box', transition: 'border-color .15s',
+	});
 
 	return (
+		<div id="contact" style={{
+			minHeight: '100vh',
+			display: 'flex', alignItems: 'center',
+			paddingTop: isMobile ? '60px' : 0,
+			paddingBottom: isMobile ? '60px' : 0,
+		}}>
 		<section
-			id="contact"
-			onMouseMove={onMove}
-			onMouseLeave={reset}
 			style={{
-				padding: '120px 48px 100px',
-				borderTop: '1px solid var(--rule)',
+				padding: isMobile ? '16px 20px' : '16px 54px',
+				display: 'grid',
+				gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+				gap: isMobile ? '48px' : '80px',
+				alignItems: 'start',
+				maxWidth: 1100,
+				margin: '0 auto',
+				width: '100%',
 			}}
 		>
-			<SectionHeader eyebrow="Contact" title="Let's work together." />
+			{/* ── Left col ── */}
+			<div ref={leftRef} style={{
+				opacity: leftInView ? 1 : 0,
+				transform: leftInView ? 'none' : 'translateY(24px)',
+				transition: 'opacity 0.6s ease, transform 0.6s ease',
+			}}>
+				<div style={{
+					fontFamily: 'var(--sans)', fontSize: 17, color: 'var(--mute)',
+					letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 20,
+				}}></div>
 
-			<div style={{ marginTop: 72, display: 'flex', justifyContent: 'center' }}>
-				<a
-					ref={ref}
-					href="mailto:hi@ersya.co"
-					style={{
-						fontFamily: 'var(--serif)', fontStyle: 'italic', fontWeight: 400,
-						fontSize: 'clamp(38px, 6vw, 90px)',
-						lineHeight: 1, letterSpacing: '-0.025em',
-						color: 'var(--ink)', textDecoration: 'none',
-						transform: `translate(${pos.x}px, ${pos.y}px)`,
-						transition: 'transform .35s cubic-bezier(.2,.7,.3,1)',
-						display: 'inline-flex', alignItems: 'baseline', gap: 14,
-					}}
-				>
-					hi@ersya.co
-					<span style={{
-						fontFamily: 'var(--sans)', fontStyle: 'normal',
-						fontSize: 'clamp(16px, 1.6vw, 24px)',
-						color: 'var(--mute)', transform: 'translateY(-1em)', display: 'inline-block',
-					}}>↗</span>
-				</a>
+				<h2 style={{
+					margin: '0 0 18px',
+					fontSize: isMobile ? 'clamp(28px, 8vw, 42px)' : 'clamp(36px, 4vw, 58px)',
+					lineHeight: 1.05, letterSpacing: '-0.03em', fontWeight: 700,
+					fontFamily: 'var(--sans)',
+				}}>
+					Say hi & let's work together!
+				</h2>
+
+				<p style={{
+					margin: '0 0 36px', fontSize: 17,
+					color: 'var(--mute)', lineHeight: 1.65,
+				}}>
+					Reach out for collabs and work
+				</p>
+
+				<div style={{ display: 'flex', gap: 10 }}>
+					{SOCIAL_LINKS.map((s) => (
+						<SocialChip key={s.label} {...s} />
+					))}
+				</div>
 			</div>
 
-			<div style={{
-				marginTop: 72,
-				display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14,
-				maxWidth: 680, margin: '72px auto 0',
+			{/* ── Right col — form card ── */}
+			<div ref={rightRef} style={{
+				background: 'var(--surface)',
+				border: '1px solid var(--rule)',
+				borderRadius: 16, padding: '28px 28px 24px',
+				opacity: rightInView ? 1 : 0,
+				transform: rightInView ? 'none' : 'translateY(24px)',
+				transition: 'opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s',
 			}}>
-				<ContactCard label="Email"  handle="hi@ersya.co" hint="Best for project enquiries"      href="mailto:hi@ersya.co" />
-				<ContactCard label="GitHub" handle="@ersya"      hint="Code, side-projects, open source" href="https://github.com/" />
+				<div style={{ marginBottom: 22 }}>
+					<div style={{
+						fontFamily: 'var(--sans)', fontSize: 13,
+						letterSpacing: '0.12em', textTransform: 'uppercase',
+						fontWeight: 500,
+					}}>Send a message</div>
+				</div>
+
+				<label style={{ display: 'block', marginBottom: 14 }}>
+					<div style={{
+						fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--mute)',
+						letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 7,
+					}}>Subject</div>
+					<input
+						value={subject}
+						onChange={e => setSubject(e.target.value)}
+						onFocus={() => setFocusedField('subject')}
+						onBlur={() => setFocusedField(null)}
+						placeholder="Let's build something together"
+						style={fieldStyle('subject')}
+					/>
+				</label>
+
+				<label style={{ display: 'block', marginBottom: 20 }}>
+					<div style={{
+						fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--mute)',
+						letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 7,
+					}}>Message</div>
+					<textarea
+						value={message}
+						onChange={e => setMessage(e.target.value)}
+						onFocus={() => setFocusedField('message')}
+						onBlur={() => setFocusedField(null)}
+						placeholder="Tell me a bit about your idea..."
+						rows={5}
+						style={{ ...fieldStyle('message'), resize: 'vertical' }}
+					/>
+				</label>
+
+				<button
+					onClick={handleSend}
+					style={{
+						background: 'var(--ink)', color: 'var(--paper)',
+						border: 'none', borderRadius: 10,
+						padding: '12px 24px', fontSize: 17, fontWeight: 500,
+						fontFamily: 'var(--sans)', cursor: 'pointer',
+						transition: 'opacity .15s',
+					}}
+					onMouseEnter={e => e.currentTarget.style.opacity = '0.75'}
+					onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+				>
+					Send Email
+				</button>
 			</div>
 		</section>
+		</div>
 	);
 };
 
-const ContactCard = ({ label, handle, hint, href }) => {
+const SocialChip = ({ label, icon, href }) => {
 	const [hov, setHov] = React.useState(false);
 	return (
-		<a href={href}
+		<a
+			href={href}
+			title={label}
 			onMouseEnter={() => setHov(true)}
 			onMouseLeave={() => setHov(false)}
 			style={{
-				textDecoration: 'none', color: 'var(--ink)',
-				padding: '22px 24px',
+				width: 42, height: 42, borderRadius: '50%',
 				border: `1px solid ${hov ? 'var(--ink)' : 'var(--rule)'}`,
-				borderRadius: 14,
-				background: hov ? '#fafafa' : '#fff',
-				display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 16,
-				transition: 'border-color .15s, background .15s, transform .2s',
-				transform: hov ? 'translateY(-2px)' : 'none',
+				display: 'flex', alignItems: 'center', justifyContent: 'center',
+				textDecoration: 'none',
+				transition: 'border-color .15s, opacity .15s',
+				background: hov ? 'var(--surface)' : 'transparent',
+				opacity: hov ? 1 : 0.7,
 			}}
 		>
-			<div>
-				<div style={{
-					fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--mute)',
-					letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6,
-				}}>{label}</div>
-				<div style={{ fontSize: 17, fontWeight: 500, letterSpacing: '-0.01em' }}>{handle}</div>
-				<div style={{
-					marginTop: 4, fontFamily: 'var(--serif)', fontStyle: 'italic',
-					fontSize: 14, color: 'var(--mute)',
-				}}>— {hint}</div>
-			</div>
-			<span style={{ color: 'var(--mute)', fontSize: 18 }}>→</span>
+			<img src={icon} alt={label} className="icon-adaptive" style={{ width: 20, height: 20, objectFit: 'contain' }} />
 		</a>
 	);
 };
 
-const Footer = () => (
-	<footer style={{
-		padding: '28px 48px',
-		borderTop: '1px solid var(--rule)',
-		display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-	}}>
-		<span style={{ fontSize: 14, fontWeight: 500, letterSpacing: '-0.005em' }}>
-			Ersya Saskia
-		</span>
-		<div style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-			{[
-				{ label: 'GitHub',  href: 'https://github.com/' },
-				{ label: 'Email',   href: 'mailto:hi@ersya.co' },
-			].map(({ label, href }) => (
-				<a key={label} href={href} style={{
-					color: 'var(--mute)', textDecoration: 'none', fontSize: 14,
-					transition: 'color .15s',
-				}}
-					onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
-					onMouseLeave={e => e.currentTarget.style.color = 'var(--mute)'}
-				>{label}</a>
-			))}
-			<span style={{ color: 'var(--mute)', fontSize: 14 }}>© 2026</span>
-		</div>
-	</footer>
-);
+const Footer = () => {
+	const { isMobile } = useResponsive();
+	return (
+		<footer style={{
+			padding: isMobile ? '24px 20px' : '30px 54px',
+			display: 'flex',
+			flexDirection: isMobile ? 'column' : 'row',
+			alignItems: isMobile ? 'flex-start' : 'center',
+			justifyContent: 'space-between',
+			gap: isMobile ? 16 : 0,
+		}}>
+			<span style={{ fontSize: 17, color: 'var(--mute)' }}>
+				Ersya Najwa Saskia
+			</span>
+			<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 16 : 28, alignItems: 'center' }}>
+				{[
+					{ label: 'GitHub',   href: 'https://github.com/ry-rysa' },
+					{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/ersya-saskia' },
+					{ label: 'Email',    href: 'mailto:saskiarysa@gmail.com' },
+				].map(({ label, href }) => (
+					<a key={label} href={href} style={{
+						color: 'var(--mute)', textDecoration: 'none', fontSize: 17,
+						transition: 'color .15s',
+					}}
+						onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
+						onMouseLeave={e => e.currentTarget.style.color = 'var(--mute)'}
+					>{label}</a>
+				))}
+				<span style={{ color: 'var(--mute)', fontSize: 17 }}>© 2026</span>
+			</div>
+		</footer>
+	);
+};
 
 Object.assign(window, { Contact, Footer });
