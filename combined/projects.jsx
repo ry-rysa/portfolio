@@ -16,7 +16,7 @@ const ICON_RADIUS = 28;
 const ITEM_GAP    = 180;
 const ITEM_W      = 210;
 
-const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, inView, index }) => {
+const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inView, index, isMobile }) => {
 	const { isTablet } = useResponsive();
 	const iconW = isTablet ? '72%' : ICON_SIZE;
 
@@ -24,6 +24,7 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, inView, ind
 		<div
 			onMouseEnter={onEnter}
 			onMouseLeave={onLeave}
+			onClick={isMobile ? onTap : undefined}
 			style={{
 				position: 'relative',
 				display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
@@ -31,6 +32,7 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, inView, ind
 				transform: inView ? 'none' : 'translateY(20px)',
 				transition: `opacity 0.5s ease ${index * 0.06}s, transform 0.5s ease ${index * 0.06}s`,
 				zIndex: isHovered ? 40 : 1,
+				cursor: isMobile ? 'pointer' : 'default',
 			}}
 		>
 			{/* Icon + pill — blurred when another card is hovered */}
@@ -60,13 +62,15 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, inView, ind
 			{/* Hover overlay */}
 			{isHovered && (
 				<div style={{
-					position: 'absolute',
-					top: '-80px', left: '50%',
-					transform: 'translateX(-50%)',
-					width: 300,
+					position: isMobile ? 'fixed' : 'absolute',
+					...(isMobile
+						? { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
+						: { top: '-80px', left: '50%', transform: 'translateX(-50%)' }
+					),
+					width: isMobile ? 'min(300px, 85vw)' : 300,
 					padding: '0 4px',
-					zIndex: 40,
-					animation: 'card-pop 0.2s cubic-bezier(.34,1.4,.64,1)',
+					zIndex: 1000,
+					animation: isMobile ? 'card-pop-center 0.22s cubic-bezier(.34,1.4,.64,1)' : 'card-pop 0.2s cubic-bezier(.34,1.4,.64,1)',
 				}}>
 					{/* 2 stacked screenshots */}
 					<div style={{ position: 'relative', height: 170, marginBottom: 18, display: 'flex', justifyContent: 'center' }}>
@@ -172,7 +176,22 @@ const Projects = () => {
 					from { opacity: 0; transform: translateX(-50%) scale(0.92); }
 					to   { opacity: 1; transform: translateX(-50%) scale(1); }
 				}
+				@keyframes card-pop-center {
+					from { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
+					to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+				}
 			`}</style>
+			{/* Mobile backdrop */}
+			{isMobile && hoveredId && (
+				<div
+					onClick={() => setHoveredId(null)}
+					style={{
+						position: 'fixed', inset: 0, zIndex: 999,
+						background: 'rgba(0,0,0,0.35)',
+						backdropFilter: 'blur(2px)',
+					}}
+				/>
+			)}
 			<div style={{ maxWidth: 1160, margin: '0 auto' }}>
 				<h2 ref={headingRef} style={{
 					textAlign: 'center', margin: '0 0 40px',
@@ -254,10 +273,12 @@ const Projects = () => {
 							item={item}
 							index={i}
 							inView={gridInView}
-							isHovered={!isMobile && hoveredId === item.id}
-							isBlurred={!isMobile && hoveredId !== null}
+							isMobile={isMobile}
+							isHovered={hoveredId === item.id}
+							isBlurred={hoveredId !== null && hoveredId !== item.id}
 							onEnter={() => !isMobile && setHoveredId(item.id)}
 							onLeave={() => !isMobile && setHoveredId(null)}
+							onTap={() => setHoveredId(hoveredId === item.id ? null : item.id)}
 						/>
 					))}
 				</div>
