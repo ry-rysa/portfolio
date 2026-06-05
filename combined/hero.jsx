@@ -1,10 +1,10 @@
 // Nav + Hero (cycling greeting) + Passion Grid + Skills
 
-const SECTIONS = ['personal', 'about', 'work', 'contact'];
+const SECTIONS = ['personal', 'about', 'projects', 'contact'];
 const NAV = [
 	{ label: 'Home',     href: '#personal', activeId: 'personal' },
 	{ label: 'About',    href: '#about',    activeId: 'about'    },
-	{ label: 'Projects', href: '#work',     activeId: 'work'     },
+	{ label: 'Projects', href: '#projects', activeId: 'projects' },
 	{ label: 'Contact',  href: '#contact',  activeId: 'contact'  },
 ];
 
