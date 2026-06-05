@@ -181,24 +181,24 @@ const Footer = () => {
 			justifyContent: 'space-between',
 			gap: isMobile ? 16 : 0,
 		}}>
-			<span style={{ fontSize: 17, color: 'var(--mute)' }}>
+			<span style={{ fontSize: isMobile ? 13 : 17, color: 'var(--mute)' }}>
 				Ersya Najwa Saskia
 			</span>
-			<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 16 : 28, alignItems: 'center' }}>
+			<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 12 : 28, alignItems: 'center' }}>
 				{[
 					{ label: 'GitHub',   href: 'https://github.com/ry-rysa' },
 					{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/ersya-saskia' },
 					{ label: 'Email',    href: 'mailto:saskiarysa@gmail.com' },
 				].map(({ label, href }) => (
 					<a key={label} href={href} style={{
-						color: 'var(--mute)', textDecoration: 'none', fontSize: 17,
+						color: 'var(--mute)', textDecoration: 'none', fontSize: isMobile ? 13 : 17,
 						transition: 'color .15s',
 					}}
 						onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
 						onMouseLeave={e => e.currentTarget.style.color = 'var(--mute)'}
 					>{label}</a>
 				))}
-				<span style={{ color: 'var(--mute)', fontSize: 17 }}>© 2026</span>
+				<span style={{ color: 'var(--mute)', fontSize: isMobile ? 13 : 17 }}>© 2026</span>
 			</div>
 		</footer>
 	);
