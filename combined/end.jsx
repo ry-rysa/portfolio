@@ -18,9 +18,9 @@ const Contact = () => {
 	};
 
 	const fieldStyle = (name) => ({
-		width: '100%', padding: '11px 14px',
+		width: '100%', padding: isMobile ? '9px 11px' : '11px 14px',
 		border: `1px solid ${focusedField === name ? 'var(--ink)' : 'var(--rule)'}`,
-		borderRadius: 10, fontSize: 17,
+		borderRadius: 10, fontSize: isMobile ? 14 : 17,
 		fontFamily: 'var(--sans)', color: 'var(--ink)',
 		background: 'var(--card)', outline: 'none',
 		boxSizing: 'border-box', transition: 'border-color .15s',
@@ -83,7 +83,7 @@ const Contact = () => {
 			<div ref={rightRef} style={{
 				background: 'var(--surface)',
 				border: '1px solid var(--rule)',
-				borderRadius: 16, padding: '28px 28px 24px',
+				borderRadius: 16, padding: isMobile ? '18px 16px 16px' : '28px 28px 24px',
 				opacity: rightInView ? 1 : 0,
 				transform: rightInView ? 'none' : 'translateY(24px)',
 				transition: 'opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s',
@@ -132,7 +132,7 @@ const Contact = () => {
 					style={{
 						background: 'var(--ink)', color: 'var(--paper)',
 						border: 'none', borderRadius: 10,
-						padding: '12px 24px', fontSize: 17, fontWeight: 500,
+						padding: isMobile ? '9px 18px' : '12px 24px', fontSize: isMobile ? 13 : 17, fontWeight: 500,
 						fontFamily: 'var(--sans)', cursor: 'pointer',
 						transition: 'opacity .15s',
 					}}
@@ -174,31 +174,31 @@ const Footer = () => {
 	const { isMobile } = useResponsive();
 	return (
 		<footer style={{
-			padding: isMobile ? '24px 20px' : '30px 54px',
+			padding: isMobile ? '16px 20px' : '30px 54px',
 			display: 'flex',
-			flexDirection: isMobile ? 'column' : 'row',
-			alignItems: isMobile ? 'flex-start' : 'center',
+			flexDirection: isMobile ? 'row' : 'row',
+			alignItems: 'center',
 			justifyContent: 'space-between',
-			gap: isMobile ? 16 : 0,
+			gap: 0,
 		}}>
-			<span style={{ fontSize: isMobile ? 13 : 17, color: 'var(--mute)' }}>
+			<span style={{ fontSize: isMobile ? 12 : 17, color: 'var(--mute)' }}>
 				Ersya Najwa Saskia
 			</span>
-			<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 12 : 28, alignItems: 'center' }}>
+			<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 10 : 28, alignItems: 'center' }}>
 				{[
 					{ label: 'GitHub',   href: 'https://github.com/ry-rysa' },
 					{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/ersya-saskia' },
 					{ label: 'Email',    href: 'mailto:saskiarysa@gmail.com' },
 				].map(({ label, href }) => (
 					<a key={label} href={href} style={{
-						color: 'var(--mute)', textDecoration: 'none', fontSize: isMobile ? 13 : 17,
+						color: 'var(--mute)', textDecoration: 'none', fontSize: isMobile ? 12 : 17,
 						transition: 'color .15s',
 					}}
 						onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
 						onMouseLeave={e => e.currentTarget.style.color = 'var(--mute)'}
 					>{label}</a>
 				))}
-				<span style={{ color: 'var(--mute)', fontSize: isMobile ? 13 : 17 }}>© 2026</span>
+				<span style={{ color: 'var(--mute)', fontSize: isMobile ? 12 : 17 }}>© 2026</span>
 			</div>
 		</footer>
 	);
