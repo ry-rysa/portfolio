@@ -104,32 +104,33 @@ const Projects = () => {
 
 				{/* Project grid — fixed height so filtering never shifts the page */}
 				<div ref={gridRef} style={{
-					display: 'flex', flexWrap: 'wrap',
-					gap: isMobile ? '60px 24px' : `96px ${ITEM_GAP}px`,
-					justifyContent: 'center', alignItems: 'flex-start',
+					display: 'grid',
+					gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : `repeat(4, ${ITEM_W}px)`,
+					gap: isMobile ? '40px 20px' : `96px ${ITEM_GAP}px`,
+					justifyContent: 'center',
 					minHeight: isMobile ? undefined : 600,
 					alignContent: 'flex-start',
 				}}>
 					{filtered.map((item, i) => (
 						<div key={item.id} style={{
 							display: 'flex', flexDirection: 'column',
-							alignItems: 'center', gap: 12,
-							flexShrink: 0, width: ITEM_W,
+							alignItems: 'center', gap: 10,
 							opacity: gridInView ? 1 : 0,
 							transform: gridInView ? 'none' : 'translateY(20px)',
 							transition: `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s`,
 						}}>
 							<div style={{
-								width: ICON_SIZE, height: ICON_SIZE,
+								width: isMobile ? '80%' : ICON_SIZE,
+								aspectRatio: '1',
 								borderRadius: ICON_RADIUS,
 								background: 'var(--surface)',
 								border: '1px solid var(--rule)',
 							}} />
 							<span style={{
-								fontSize: 14, color: 'var(--mute)',
+								fontSize: isMobile ? 12 : 14, color: 'var(--mute)',
 								fontFamily: 'var(--sans)', fontWeight: 400,
 								background: 'var(--card)', border: '1px solid var(--rule)',
-								borderRadius: 999, padding: '5px 14px',
+								borderRadius: 999, padding: isMobile ? '4px 10px' : '5px 14px',
 								whiteSpace: 'nowrap',
 							}}>
 								{item.title}

@@ -255,12 +255,53 @@ const ALL_CARDS = [
 const FlipCard = ({ icon, size, label, items, noFlip, github, front, noInvert }) => {
 	const [flipped, setFlipped] = React.useState(false);
 	const { isMobile, isTablet } = useResponsive();
+
+	// On mobile: simple crossfade (no 3D) to avoid 18 GPU compositing layers
+	if (isMobile) return (
+		<div
+			onClick={() => { if (!noFlip) setFlipped(f => !f); }}
+			style={{ aspectRatio: '1', position: 'relative', cursor: !noFlip ? 'pointer' : 'default', borderRadius: 12, overflow: 'hidden' }}
+		>
+			<div style={{
+				position: 'absolute', inset: 0,
+				background: 'var(--surface)', border: '1px solid var(--rule)', borderRadius: 12,
+				display: 'flex', alignItems: 'center', justifyContent: 'center',
+				opacity: flipped ? 0 : 1, transition: 'opacity 0.25s',
+			}}>
+				{icon
+					? <img src={icon} alt="" className={noInvert ? '' : 'icon-adaptive'} style={{ maxWidth: size, maxHeight: size, objectFit: 'contain' }} />
+					: <div style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400, color: 'var(--mute)', textAlign: 'center', background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 999, padding: '10px 22px', whiteSpace: 'nowrap' }}>{front}</div>
+				}
+			</div>
+			{!noFlip && (
+				<div style={{
+					position: 'absolute', inset: 0,
+					background: 'var(--surface)', border: '1px solid var(--rule)', borderRadius: 12,
+					display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start',
+					padding: '8px', overflow: 'hidden',
+					opacity: flipped ? 1 : 0, transition: 'opacity 0.25s',
+				}}>
+					{github
+						? <a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto', fontFamily: 'var(--sans)', fontSize: 9, fontWeight: 400, color: 'var(--card)', background: '#4b4b4b', borderRadius: 999, padding: '4px 8px', whiteSpace: 'nowrap', textDecoration: 'none' }}>View Github →</a>
+						: <>
+							<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: 9, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: 5, marginTop: 3, width: '100%', textAlign: 'center' }}>{label}</div>
+							<div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, width: '100%' }}>
+								{(items || []).map((item, i) => (
+									<span key={i} style={{ fontFamily: 'var(--sans)', fontSize: 7, color: 'var(--mute)', fontWeight: 400, background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 8, padding: '2px 4px', whiteSpace: 'nowrap' }}>{item}</span>
+								))}
+							</div>
+						</>
+					}
+				</div>
+			)}
+		</div>
+	);
+
 	return (
 		<div
-			onMouseEnter={() => { if (!noFlip && !isMobile) setFlipped(true); }}
-			onMouseLeave={() => { if (!isMobile) setFlipped(false); }}
-			onClick={() => { if (!noFlip) setFlipped(f => !f); }}
-			style={{ aspectRatio: '1', perspective: '700px', cursor: isMobile && !noFlip ? 'pointer' : 'default' }}
+			onMouseEnter={() => { if (!noFlip) setFlipped(true); }}
+			onMouseLeave={() => setFlipped(false)}
+			style={{ aspectRatio: '1', perspective: '700px', cursor: 'default' }}
 		>
 			<div style={{
 				position: 'relative', width: '100%', height: '100%',
@@ -291,28 +332,28 @@ const FlipCard = ({ icon, size, label, items, noFlip, github, front, noInvert })
 						position: 'absolute', inset: 0,
 						background: 'var(--surface)', border: '1px solid var(--rule)', borderRadius: 12,
 						display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start',
-						padding: isMobile ? '8px' : isTablet ? '12px 14px' : '22px 28px',
+						padding: isTablet ? '12px 14px' : '22px 28px',
 						backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
 						transform: 'rotateY(180deg)',
 						overflow: 'hidden',
 					}}>
 						{github ? (
 							<a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto',
-								fontFamily: 'var(--sans)', fontSize: isMobile ? 9 : isTablet ? 10 : 12, fontWeight: 400,
+								fontFamily: 'var(--sans)', fontSize: isTablet ? 10 : 12, fontWeight: 400,
 								color: 'var(--card)', background: '#4b4b4b', borderRadius: 999,
-								padding: isMobile ? '4px 8px' : '6px 14px', whiteSpace: 'nowrap', textDecoration: 'none',
+								padding: '6px 14px', whiteSpace: 'nowrap', textDecoration: 'none',
 							}}>View Github →</a>
 						) : (
 							<>
-								<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: isMobile ? 9 : isTablet ? 11 : 15, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: isMobile ? 5 : isTablet ? 7 : 14, marginTop: isMobile ? 3 : isTablet ? 6 : 14, width: '100%', textAlign: 'center' }}>{label}</div>
-								<div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 3 : isTablet ? 4 : 6, width: '100%' }}>
+								<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: isTablet ? 11 : 15, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: isTablet ? 7 : 14, marginTop: isTablet ? 6 : 14, width: '100%', textAlign: 'center' }}>{label}</div>
+								<div style={{ display: 'flex', flexWrap: 'wrap', gap: isTablet ? 4 : 6, width: '100%' }}>
 									{(items || []).map((item, i) => (
 										<span key={i} style={{
 											fontFamily: 'var(--sans)',
-											fontSize: isMobile ? 7 : isTablet ? (items.length >= 4 ? 9 : 10) : (items.length >= 4 ? 12 : 13),
+											fontSize: isTablet ? (items.length >= 4 ? 9 : 10) : (items.length >= 4 ? 12 : 13),
 											color: 'var(--mute)', fontWeight: 400,
 											background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 8,
-											padding: isMobile ? '2px 4px' : isTablet ? (items.length >= 4 ? '3px 6px' : '4px 8px') : (items.length >= 4 ? '5px 10px' : '6px 13px'),
+											padding: isTablet ? (items.length >= 4 ? '3px 6px' : '4px 8px') : (items.length >= 4 ? '5px 10px' : '6px 13px'),
 											whiteSpace: 'nowrap',
 										}}>{item}</span>
 									))}
