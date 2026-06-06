@@ -98,16 +98,16 @@ const OngoingCard = ({ item, index }) => {
 				{/* Normal view */}
 				<div style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'all', transition: 'opacity .2s', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
 					<div>
-						<div style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.01em', fontFamily: 'var(--sans)' }}>{item.title}</div>
-						<div style={{ fontSize: 13, color: 'var(--mute)', marginTop: 5, fontFamily: 'var(--sans)' }}>{item.role}</div>
+						<div style={{ fontWeight: 700, fontSize: isMobile ? 17 : 20, letterSpacing: '-0.01em', fontFamily: 'var(--sans)' }}>{item.title}</div>
+						<div style={{ fontSize: isMobile ? 13 : 14, color: 'var(--mute)', marginTop: 5, fontFamily: 'var(--sans)' }}>{item.role}</div>
 					</div>
 					<div>
-						<p style={{ margin: '0 0 14px', fontSize: 13, fontWeight: 500, lineHeight: 1.75, color: 'var(--mute)', fontFamily: 'var(--sans)' }}>{item.desc || 'AAAAA'}</p>
+						<p style={{ margin: '0 0 14px', fontSize: isMobile ? 13 : 15, fontWeight: 500, lineHeight: 1.75, color: 'var(--mute)', fontFamily: 'var(--sans)' }}>{item.desc || 'AAAAA'}</p>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<button onClick={() => setOpen(true)} style={{
 							opacity: hov || isMobile ? 1 : 0,
 							transition: 'opacity .2s',
-							fontSize: 12, fontWeight: 500, fontFamily: 'var(--sans)',
+							fontSize: isMobile ? 12 : 13, fontWeight: 500, fontFamily: 'var(--sans)',
 							color: 'var(--card)', background: '#4b4b4b',
 							border: 'none', borderRadius: 999, padding: '7px 16px',
 							cursor: 'pointer', letterSpacing: '-0.01em',

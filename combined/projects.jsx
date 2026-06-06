@@ -2,11 +2,11 @@ const PROJECTS = [
 	{ id: 'nubi',        title: 'Nubi',                 desc: 'A mobile journaling & mood-tracking app to reflect on daily experiences.',      color1: '#dbeafe', color2: '#bfdbfe', url: '', github: 'https://github.com/ry-rysa',           tags: ['Mobile App', 'Software Engineer', 'UI/UX'] },
 	{ id: 'cupof',       title: 'Cupof',                desc: 'A web & mobile platform connecting users over shared coffee experiences.',        color1: '#fce7f3', color2: '#fbcfe8', url: '', github: 'https://github.com/ry-rysa',           tags: ['Web Development', 'Mobile App', 'Software Engineer', 'UI/UX'] },
 	{ id: 'drowsiness',  title: 'Drowsiness Detection', desc: 'Real-time driver drowsiness detection using computer vision and ML models.',      color1: '#fef9c3', color2: '#fde68a', url: '', github: 'https://github.com/ry-rysa',           tags: ['Machine Learning', 'Computer Vision'] },
-	{ id: 'bahasabuddy', title: 'BahasaBuddy',          desc: 'A web app for learning Bahasa Indonesia through interactive exercises.',          color1: '#d1fae5', color2: '#a7f3d0', url: '', github: 'https://github.com/ry-rysa',           tags: ['Web Development', 'Software Engineer', 'UI/UX'] },
+	{ id: 'bahasabuddy', title: 'BahasaBuddy',          desc: "A web app for learning Indonesian regional languages through placement tests, daily lessons, and self-paced practice.",          color1: '#d1fae5', color2: '#a7f3d0', icon: 'assets/icon-project/bahasabuddy/Bb Logo.png', screenshot1: 'assets/icon-project/bahasabuddy/Card 1 - Brand.png', screenshot2: 'assets/icon-project/bahasabuddy/Card 2 - Languages.png', url: 'https://github.com/robertlyon7/Bahasa-Buddy', github: 'https://github.com/robertlyon7/Bahasa-Buddy', tags: ['Web Development', 'Software Engineer', 'UI/UX'] },
 	{ id: 'cardetector', title: 'Car Detector',         desc: 'Detects and classifies car models from images using deep learning.',              color1: '#e0e7ff', color2: '#c7d2fe', url: '', github: 'https://github.com/ry-rysa',           tags: ['Machine Learning', 'Computer Vision'] },
-	{ id: 'career',      title: 'Career Prediction',    desc: 'Predicts suitable career paths based on skills and personality via data mining.',  color1: '#fef3c7', color2: '#fde68a', url: '', github: 'https://github.com/ry-rysa',           tags: ['Data Mining'] },
-	{ id: 'goose',       title: 'Goose Chatbot',        desc: 'An NLP-powered chatbot for document-grounded Q&A on the web.',                   color1: '#ecfdf5', color2: '#d1fae5', url: '', github: 'https://github.com/ry-rysa',           tags: ['Web Development', 'NLP'] },
-	{ id: 'portfolio',   title: 'Portfolio',            desc: 'This portfolio — built with React, Three.js, and a 3D cat character.',            color1: '#f3f4f6', color2: '#e5e7eb', url: 'https://rysa-portfolio.vercel.app', github: 'https://github.com/ry-rysa/portfolio', tags: ['Web Development', 'UI/UX'] },
+	{ id: 'career',      title: 'Career Prediction',    desc: "Multi-label resume classifier that\nrecommends CS job roles.\nTrained on ~4,000 resumes\nLightGBM hit 0.995 micro-F1", color1: '#f3f4f6', color2: '#e5e7eb', url: '', github: 'https://github.com/stefani-gifta/dm-CareerPrediction-2025', hideScreenshots: true, tags: ['Data Mining'] },
+	{ id: 'goose',       title: 'Goose Chatbot',        desc: 'An AI-powered chatbot that explains any AI concept in simple, everyday terms with an optional summarize feature.', color1: '#ecfdf5', color2: '#d1fae5', icon: 'assets/icon-project/goose/goose-logo.png', screenshot1: 'assets/icon-project/goose/Card 1 - Brand.png', screenshot2: 'assets/icon-project/goose/Card 2 - Learn.png', url: '', github: 'https://github.com/stefani-gifta/laravel11-GooSe-2025', tags: ['Web Development', 'NLP'] },
+	{ id: 'portfolio',   title: 'Portfolio',            desc: "You're already here :)\nPersonal portfolio built with react,\nThree.js, and 3D character", color1: '#f3f4f6', color2: '#e5e7eb', icon: 'assets/icon-project/icon-portfolio.png', url: 'https://github.com/ry-rysa/portfolio', github: 'https://github.com/ry-rysa/portfolio', hideScreenshots: true, tags: ['Web Development', 'UI/UX'] },
 ];
 
 const ALL_TAGS = ['All', 'Mobile App', 'Web Development', 'Software Engineer', 'UI/UX', 'Machine Learning', 'Computer Vision', 'Data Mining', 'NLP'];
@@ -58,12 +58,10 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 				opacity: isBlurred ? 0.5 : 1,
 				transition: 'filter 0.45s ease, opacity 0.45s ease',
 			}}>
-				<div style={{
-					width: iconW, aspectRatio: '1',
-					borderRadius: ICON_RADIUS,
-					background: `linear-gradient(135deg, ${item.color1}, ${item.color2})`,
-					border: '1px solid var(--rule)',
-				}} />
+				{item.icon
+					? <img src={item.icon} alt={item.title} style={{ width: iconW, height: iconW, borderRadius: ICON_RADIUS, objectFit: 'cover', display: 'block', border: '1px solid var(--rule)' }} />
+					: <div style={{ width: iconW, aspectRatio: '1', borderRadius: ICON_RADIUS, background: `linear-gradient(135deg, ${item.color1}, ${item.color2})`, border: '1px solid var(--rule)' }} />
+				}
 				<span style={{
 					fontSize: isTablet ? 12 : 14, color: 'var(--mute)',
 					fontFamily: 'var(--sans)', fontWeight: 400,
@@ -81,51 +79,58 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 					position: isMobile ? 'fixed' : 'absolute',
 					...(isMobile
 						? { top: mobilePos.top, left: mobilePos.left, transform: 'none', width: mobilePos.width }
-						: { top: '-80px', left: '50%', transform: 'translateX(-50%)', width: 300 }
+						: { top: item.hideScreenshots ? '-30px' : '-110px', left: '50%', transform: 'translateX(-50%)', width: 300 }
 					),
 					padding: '0 4px',
 					zIndex: 1000,
 					animation: isMobile ? 'card-pop-mobile 0.22s cubic-bezier(.34,1.4,.64,1)' : 'card-pop 0.2s cubic-bezier(.34,1.4,.64,1)',
 				}}>
-					{/* 2 stacked screenshots */}
-					<div style={{ position: 'relative', height: isMobile ? 120 : 170, marginBottom: isMobile ? 12 : 18, display: 'flex', justifyContent: 'center' }}>
-						{/* Back card */}
-						<div style={{
-							position: 'absolute',
-							width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
-							borderRadius: isMobile ? 13 : 18,
-							background: `linear-gradient(150deg, ${item.color2}, ${item.color1})`,
-							boxShadow: '0 8px 28px rgba(0,0,0,0.13)',
-							transform: `rotate(-10deg) translateX(${isMobile ? '-22px' : '-34px'}) translateY(${isMobile ? '5px' : '8px'})`,
-							overflow: 'hidden',
-						}}>
-							<div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.25)', borderBottom: '1px solid rgba(255,255,255,0.2)' }} />
-						</div>
-						{/* Front card */}
-						<div style={{
-							position: 'absolute',
-							width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
-							borderRadius: isMobile ? 13 : 18,
-							background: `linear-gradient(150deg, ${item.color1}, #fff)`,
-							boxShadow: '0 10px 32px rgba(0,0,0,0.15)',
-							transform: `rotate(6deg) translateX(${isMobile ? '22px' : '34px'})`,
-							overflow: 'hidden',
-						}}>
-							<div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(0,0,0,0.05)' }} />
-							<div style={{ margin: isMobile ? '7px 10px 0' : '10px 14px 0', display: 'flex', flexDirection: 'column', gap: isMobile ? 5 : 7 }}>
-								{[70, 50, 60].map((w, i) => <div key={i} style={{ height: isMobile ? 5 : 6, width: `${w}%`, borderRadius: 4, background: 'rgba(0,0,0,0.08)' }} />)}
+					{/* 2 stacked screenshots — hidden if hideScreenshots */}
+					{!item.hideScreenshots && (
+						<div style={{ position: 'relative', height: isMobile ? 120 : 170, marginBottom: isMobile ? 6 : 8, display: 'flex', justifyContent: 'center' }}>
+							{/* Back card */}
+							<div style={{
+								position: 'absolute',
+								width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
+								borderRadius: isMobile ? 13 : 18,
+								background: item.screenshot1 ? undefined : `linear-gradient(150deg, ${item.color2}, ${item.color1})`,
+								boxShadow: '0 8px 28px rgba(0,0,0,0.13)',
+								transform: `rotate(-10deg) translateX(${isMobile ? '-22px' : '-34px'}) translateY(${isMobile ? '5px' : '8px'})`,
+								overflow: 'hidden',
+							}}>
+								{item.screenshot1
+									? <img src={item.screenshot1} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+									: <div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.25)', borderBottom: '1px solid rgba(255,255,255,0.2)' }} />
+								}
+							</div>
+							{/* Front card */}
+							<div style={{
+								position: 'absolute',
+								width: isMobile ? 88 : 130, height: isMobile ? 108 : 158,
+								borderRadius: isMobile ? 13 : 18,
+								background: item.screenshot2 ? undefined : `linear-gradient(150deg, ${item.color1}, #fff)`,
+								boxShadow: '0 10px 32px rgba(0,0,0,0.15)',
+								transform: `rotate(6deg) translateX(${isMobile ? '22px' : '34px'})`,
+								overflow: 'hidden',
+							}}>
+								{item.screenshot2
+									? <img src={item.screenshot2} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+									: <>
+										<div style={{ width: '100%', height: '28%', background: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(0,0,0,0.05)' }} />
+										<div style={{ margin: isMobile ? '7px 10px 0' : '10px 14px 0', display: 'flex', flexDirection: 'column', gap: isMobile ? 5 : 7 }}>
+											{[70, 50, 60].map((w, i) => <div key={i} style={{ height: isMobile ? 5 : 6, width: `${w}%`, borderRadius: 4, background: 'rgba(0,0,0,0.08)' }} />)}
+										</div>
+									</>
+								}
 							</div>
 						</div>
-					</div>
+					)}
 
 					{/* Icon */}
-					<div style={{
-						width: isMobile ? 36 : 52, height: isMobile ? 36 : 52,
-						borderRadius: isMobile ? 10 : 14,
-						background: `linear-gradient(135deg, ${item.color1}, ${item.color2})`,
-						border: '1px solid var(--rule)',
-						margin: '0 auto 8px',
-					}} />
+					{item.icon
+						? <img src={item.icon} alt={item.title} style={{ width: isMobile ? 36 : 52, height: isMobile ? 36 : 52, borderRadius: isMobile ? 10 : 14, objectFit: 'cover', display: 'block', margin: '0 auto 8px', border: '1px solid var(--rule)' }} />
+						: <div style={{ width: isMobile ? 36 : 52, height: isMobile ? 36 : 52, borderRadius: isMobile ? 10 : 14, background: `linear-gradient(135deg, ${item.color1}, ${item.color2})`, border: '1px solid var(--rule)', margin: '0 auto 8px' }} />
+					}
 
 					{/* Title */}
 					<div style={{
@@ -136,9 +141,10 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 
 					{/* Description */}
 					<div style={{
-						fontFamily: 'var(--sans)', fontSize: isMobile ? 11 : 13,
-						color: 'var(--mute)', textAlign: 'center',
+						fontFamily: 'var(--sans)', fontSize: isMobile ? 13 : 15,
+						color: 'var(--ink)', textAlign: 'center',
 						lineHeight: 1.5, marginBottom: isMobile ? 10 : 16,
+						whiteSpace: 'pre-line', opacity: 0.7,
 					}}>{item.desc}</div>
 
 					{/* View button */}
