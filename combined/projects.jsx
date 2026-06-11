@@ -47,7 +47,7 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 				opacity: inView ? 1 : 0,
 				transform: inView ? 'none' : 'translateY(20px)',
 				transition: `opacity 0.5s ease ${index * 0.06}s, transform 0.5s ease ${index * 0.06}s`,
-				zIndex: isHovered ? 40 : 1,
+				zIndex: isHovered ? 1001 : 1,
 				cursor: isMobile ? 'pointer' : 'default',
 			}}
 		>
@@ -75,7 +75,7 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 
 			{/* Hover overlay */}
 			{isHovered && (!isMobile || mobilePos) && (
-				<div style={{
+				<div onClick={e => e.stopPropagation()} style={{
 					position: isMobile ? 'fixed' : 'absolute',
 					...(isMobile
 						? { top: mobilePos.top, left: mobilePos.left, transform: 'none', width: mobilePos.width }
