@@ -293,10 +293,10 @@ const FlipCard = ({ icon, size, label, items, noFlip, github, front, noInvert })
 					{github
 						? <a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400, color: 'var(--card)', background: '#4b4b4b', borderRadius: 999, padding: '8px 16px', whiteSpace: 'nowrap', textDecoration: 'none' }}>View Github →</a>
 						: <>
-							<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: 12, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: 6, marginTop: 4, width: '100%', textAlign: 'center' }}>{label}</div>
-							<div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, width: '100%' }}>
+							<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: 13, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: 8, marginTop: 6, width: '100%', textAlign: 'center' }}>{label}</div>
+							<div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, width: '100%' }}>
 								{(items || []).map((item, i) => (
-									<span key={i} style={{ fontFamily: 'var(--sans)', fontSize: 10, color: 'var(--mute)', fontWeight: 400, background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 8, padding: '3px 6px', whiteSpace: 'nowrap' }}>{item}</span>
+									<span key={i} style={{ fontFamily: 'var(--sans)', fontSize: 11, color: 'var(--mute)', fontWeight: 400, background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 8, padding: '4px 7px', whiteSpace: 'nowrap' }}>{item}</span>
 								))}
 							</div>
 						</>
@@ -443,7 +443,7 @@ const Hero = () => {
 			</div>
 
 			{/* Chevron + project cards */}
-			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? 320 : isTablet ? 440 : 760, padding: isMobile ? '50px 0' : isTablet ? '68px 0' : '155px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? '100%' : isTablet ? 440 : 760, padding: isMobile ? '50px 0' : isTablet ? '68px 0' : '155px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
 				<button
 					onClick={() => setOpen(o => !o)}
 					style={{
@@ -461,18 +461,33 @@ const Hero = () => {
 				</button>
 
 				{open && (
-					<div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 8 : isTablet ? 12 : 28, width: '100%' }}>
-						{[0, 1, 2].map(row => (
-							<div key={row} style={{
-								display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: isMobile ? 8 : isTablet ? 12 : 28,
-								opacity: aboutInView ? 1 : 0,
-								transform: aboutInView ? 'none' : 'translateY(22px)',
-								transition: `opacity 0.55s ease ${row * 0.1}s, transform 0.55s ease ${row * 0.1}s`,
-							}}>
-								{ALL_CARDS.slice(row * 3, row * 3 + 3).map(c => <FlipCard key={c.id} {...c} />)}
-							</div>
-						))}
-					</div>
+					isMobile ? (
+						<div style={{
+							display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, width: '100%',
+							opacity: aboutInView ? 1 : 0,
+							transform: aboutInView ? 'none' : 'translateY(22px)',
+							transition: 'opacity 0.55s ease, transform 0.55s ease',
+						}}>
+							{ALL_CARDS.map((c, i) => (
+								<div key={c.id} style={i === ALL_CARDS.length - 1 ? { gridColumn: '1 / -1', maxWidth: 'calc(50% - 5px)', margin: '0 auto', width: '100%' } : {}}>
+									<FlipCard {...c} />
+								</div>
+							))}
+						</div>
+					) : (
+						<div style={{ display: 'flex', flexDirection: 'column', gap: isTablet ? 12 : 28, width: '100%' }}>
+							{[0, 1, 2].map(row => (
+								<div key={row} style={{
+									display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: isTablet ? 12 : 28,
+									opacity: aboutInView ? 1 : 0,
+									transform: aboutInView ? 'none' : 'translateY(22px)',
+									transition: `opacity 0.55s ease ${row * 0.1}s, transform 0.55s ease ${row * 0.1}s`,
+								}}>
+									{ALL_CARDS.slice(row * 3, row * 3 + 3).map(c => <FlipCard key={c.id} {...c} />)}
+								</div>
+							))}
+						</div>
+					)
 				)}
 			</div>
 		</section>
