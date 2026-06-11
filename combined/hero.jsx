@@ -291,12 +291,12 @@ const FlipCard = ({ icon, size, label, items, noFlip, github, front, noInvert })
 					opacity: flipped ? 1 : 0, transition: 'opacity 0.25s',
 				}}>
 					{github
-						? <a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto', fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 400, color: 'var(--card)', background: '#4b4b4b', borderRadius: 999, padding: '6px 12px', whiteSpace: 'nowrap', textDecoration: 'none' }}>View Github →</a>
+						? <a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto', fontFamily: 'var(--sans)', fontSize: 9, fontWeight: 400, color: 'var(--card)', background: '#4b4b4b', borderRadius: 999, padding: '5px 10px', whiteSpace: 'nowrap', textDecoration: 'none' }}>View Github →</a>
 						: <>
-							<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: 10, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: 4, marginTop: 3, width: '100%', textAlign: 'center' }}>{label}</div>
+							<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: 9, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: 4, marginTop: 3, width: '100%', textAlign: 'center' }}>{label}</div>
 							<div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, width: '100%' }}>
 								{(items || []).map((item, i) => (
-									<span key={i} style={{ fontFamily: 'var(--sans)', fontSize: 8, color: 'var(--mute)', fontWeight: 400, background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 6, padding: '2px 5px', whiteSpace: 'nowrap' }}>{item}</span>
+									<span key={i} style={{ fontFamily: 'var(--sans)', fontSize: 7, color: 'var(--mute)', fontWeight: 400, background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 6, padding: '2px 5px', whiteSpace: 'nowrap' }}>{item}</span>
 								))}
 							</div>
 						</>
