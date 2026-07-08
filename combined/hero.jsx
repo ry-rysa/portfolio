@@ -62,7 +62,7 @@ const Nav = () => {
 		<header style={{
 			position: 'sticky', top: 0, zIndex: 50,
 			display: 'flex', alignItems: 'center', justifyContent: 'center',
-			padding: isMobile ? '14px 20px' : '24px 54px',
+			padding: isMobile ? '14px 20px' : '18px 40px',
 			background: scrolled ? 'var(--nav-bg)' : 'transparent',
 			backdropFilter: scrolled ? 'blur(12px)' : 'none',
 			WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
@@ -73,7 +73,7 @@ const Nav = () => {
 				{NAV.map((n) => (
 					<a key={n.label} href={n.href} style={{
 						textDecoration: 'none',
-						fontSize: isMobile ? 14 : 19,
+						fontSize: isMobile ? 14 : 16,
 						color: active === n.activeId ? 'var(--ink)' : 'var(--mute)',
 						fontWeight: active === n.activeId ? 500 : 400,
 						transition: 'color .15s',
@@ -341,28 +341,28 @@ const FlipCard = ({ icon, size, label, items, noFlip, github, front, noInvert })
 						position: 'absolute', inset: 0,
 						background: 'var(--surface)', border: '1px solid var(--rule)', borderRadius: 12,
 						display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start',
-						padding: isTablet ? '12px 14px' : '22px 28px',
+						padding: isTablet ? '12px 14px' : '14px 16px',
 						backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
 						transform: 'rotateY(180deg)',
 						overflow: 'hidden',
 					}}>
 						{github ? (
 							<a href={github} target="_blank" rel="noopener noreferrer" style={{ margin: 'auto',
-								fontFamily: 'var(--sans)', fontSize: isTablet ? 13 : 15, fontWeight: 400,
+								fontFamily: 'var(--sans)', fontSize: isTablet ? 13 : 13, fontWeight: 400,
 								color: 'var(--card)', background: '#4b4b4b', borderRadius: 999,
-								padding: '8px 18px', whiteSpace: 'nowrap', textDecoration: 'none',
+								padding: '6px 14px', whiteSpace: 'nowrap', textDecoration: 'none',
 							}}>View Github →</a>
 						) : (
 							<>
-								<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: isTablet ? 13 : 15, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: isTablet ? 8 : 14, marginTop: isTablet ? 7 : 14, width: '100%', textAlign: 'center' }}>{label}</div>
-								<div style={{ display: 'flex', flexWrap: 'wrap', gap: isTablet ? 5 : 6, width: '100%' }}>
+								<div style={{ fontFamily: 'var(--sans)', fontWeight: 550, fontSize: isTablet ? 13 : 13, letterSpacing: '-0.015em', color: 'var(--ink)', marginBottom: isTablet ? 8 : 8, marginTop: isTablet ? 7 : 7, width: '100%', textAlign: 'center' }}>{label}</div>
+								<div style={{ display: 'flex', flexWrap: 'wrap', gap: isTablet ? 5 : 5, width: '100%' }}>
 									{(items || []).map((item, i) => (
 										<span key={i} style={{
 											fontFamily: 'var(--sans)',
-											fontSize: isTablet ? (items.length >= 4 ? 11 : 12) : (items.length >= 4 ? 12 : 13),
+											fontSize: isTablet ? (items.length >= 4 ? 11 : 12) : (items.length >= 4 ? 10 : 11),
 											color: 'var(--mute)', fontWeight: 400,
 											background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 8,
-											padding: isTablet ? (items.length >= 4 ? '4px 7px' : '5px 9px') : (items.length >= 4 ? '5px 10px' : '6px 13px'),
+											padding: isTablet ? (items.length >= 4 ? '4px 7px' : '5px 9px') : (items.length >= 4 ? '3px 7px' : '4px 9px'),
 											whiteSpace: 'nowrap',
 										}}>{item}</span>
 									))}
@@ -382,7 +382,7 @@ const Hero = () => {
 	const [aboutRef, aboutInView] = useInView(0.08);
 	return (
 		<section style={{
-			padding: isTablet ? '90px 20px 0' : '150px 54px 0',
+			padding: isTablet ? '90px 20px 0' : '70px 54px 0',
 			display: 'flex', flexDirection: 'column', alignItems: 'center',
 			position: 'relative',
 		}}>
@@ -396,7 +396,7 @@ const Hero = () => {
 				<div style={{ textAlign: isTablet ? 'center' : 'right' }}>
 					<p style={{
 						margin: 0,
-						fontSize: 'clamp(19px, 2.2vw, 25px)',
+						fontSize: 'clamp(17px, 1.6vw, 20px)',
 						lineHeight: 1.5,
 						letterSpacing: '-0.015em',
 						color: 'var(--ink)',
@@ -409,8 +409,8 @@ const Hero = () => {
 
 				{/* Center — character */}
 				<div style={{
-					width: isMobile ? 240 : isTablet ? 320 : 500,
-					height: isMobile ? 264 : isTablet ? 352 : 550,
+					width: isMobile ? 240 : isTablet ? 320 : 340,
+					height: isMobile ? 264 : isTablet ? 352 : 374,
 					flexShrink: 0,
 					position: 'relative', zIndex: 0,
 				}}>
@@ -430,7 +430,7 @@ const Hero = () => {
 				<div style={{ textAlign: isTablet ? 'center' : 'left' }}>
 					<p style={{
 						margin: 0,
-						fontSize: 'clamp(20px, 2.2vw, 28px)',
+						fontSize: 'clamp(18px, 1.6vw, 21px)',
 						lineHeight: 1.5,
 						letterSpacing: '-0.015em',
 						color: 'var(--ink)',
@@ -443,7 +443,7 @@ const Hero = () => {
 			</div>
 
 			{/* Chevron + project cards */}
-			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? 320 : isTablet ? 440 : 760, padding: isMobile ? '50px 0' : isTablet ? '68px 0' : '155px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+			<div id="about" ref={aboutRef} style={{ width: '100%', maxWidth: isMobile ? 320 : isTablet ? 440 : 520, padding: isMobile ? '50px 0' : isTablet ? '68px 0' : '60px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
 				<button
 					onClick={() => setOpen(o => !o)}
 					style={{
@@ -461,10 +461,10 @@ const Hero = () => {
 				</button>
 
 				{open && (
-					<div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 8 : isTablet ? 12 : 28, width: '100%' }}>
+					<div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 8 : isTablet ? 12 : 16, width: '100%' }}>
 						{[0, 1, 2].map(row => (
 							<div key={row} style={{
-								display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: isMobile ? 8 : isTablet ? 12 : 28,
+								display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: isMobile ? 8 : isTablet ? 12 : 16,
 								opacity: aboutInView ? 1 : 0,
 								transform: aboutInView ? 'none' : 'translateY(22px)',
 								transition: `opacity 0.55s ease ${row * 0.1}s, transform 0.55s ease ${row * 0.1}s`,
