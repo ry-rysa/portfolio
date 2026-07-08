@@ -597,15 +597,15 @@ const Loader = () => {
 		const tryHide = () => {
 			if (!loaded || !elapsed) return;
 			setFading(true);
-			setTimeout(() => setGone(true), 700);
+			setTimeout(() => setGone(true), 350);
 		};
 
 		const onLoaded = () => { loaded = true; tryHide(); };
 		const onTimer  = () => { elapsed = true; tryHide(); };
 
 		window.addEventListener('character-loaded', onLoaded, { once: true });
-		const t = setTimeout(onTimer, 3000);
-		const fallback = setTimeout(() => { loaded = true; elapsed = true; tryHide(); }, 8000);
+		const t = setTimeout(onTimer, 300);
+		const fallback = setTimeout(() => { loaded = true; elapsed = true; tryHide(); }, 4000);
 
 		return () => {
 			window.removeEventListener('character-loaded', onLoaded);
@@ -623,7 +623,7 @@ const Loader = () => {
 			display: 'flex',
 			alignItems: 'center', justifyContent: 'center', gap: 8,
 			opacity: fading ? 0 : 1,
-			transition: 'opacity 0.7s ease',
+			transition: 'opacity 0.35s ease',
 			pointerEvents: fading ? 'none' : 'all',
 		}}>
 			{[0, 1, 2].map(i => (

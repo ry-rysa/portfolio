@@ -1,19 +1,20 @@
 const PROJECTS = [
-	{ id: 'nubi',        title: 'Nubi Wallet',           desc: 'A mobile journaling & mood-tracking app to reflect on daily experiences.',      color1: '#dbeafe', color2: '#bfdbfe', icon: 'assets/icon-project/nubi/Logo - Light.png', screenshot1: 'assets/icon-project/nubi/Card 1 - Brand.png', screenshot2: 'assets/icon-project/nubi/Card 2 - Wallet.png', url: 'https://github.com/ry-rysa/nubi-wallet', github: 'https://github.com/ry-rysa/nubi-wallet', tags: ['Mobile App', 'Software Engineer', 'UI/UX'] },
-	{ id: 'cupof',       title: 'Cupof',                desc: 'A web & mobile platform connecting users over shared coffee experiences.',        color1: '#fce7f3', color2: '#fbcfe8', url: '', github: 'https://github.com/ry-rysa/cupof',     tags: ['Web Development', 'Mobile App', 'Software Engineer', 'UI/UX'] },
-	{ id: 'drowsiness',  title: 'Drowsiness Detection', desc: 'Real-time driver drowsiness detection using computer vision and ML models.',      color1: '#fef9c3', color2: '#fde68a', icon: 'assets/icon-project/drowsiness detection/Logo.png', screenshot1: 'assets/icon-project/drowsiness detection/Card 1 - Brand.png', screenshot2: 'assets/icon-project/drowsiness detection/Card 2 - Metrics.png', url: 'https://github.com/ry-rysa/drowsiness-detection', github: 'https://github.com/ry-rysa/drowsiness-detection',           tags: ['Machine Learning', 'Computer Vision'] },
-	{ id: 'bahasabuddy', title: 'BahasaBuddy',          desc: "A web app for learning Indonesian regional languages through placement tests, daily lessons, and self-paced practice.",          color1: '#d1fae5', color2: '#a7f3d0', icon: 'assets/icon-project/bahasabuddy/Bb Logo.png', screenshot1: 'assets/icon-project/bahasabuddy/Card 1 - Brand.png', screenshot2: 'assets/icon-project/bahasabuddy/Card 2 - Languages.png', url: 'https://github.com/robertlyon7/Bahasa-Buddy', github: 'https://github.com/robertlyon7/Bahasa-Buddy', tags: ['Web Development', 'Software Engineer', 'UI/UX'] },
-	{ id: 'cardetector', title: 'Car Detector',         desc: 'Detects and classifies car models from images using deep learning.',              color1: '#e0e7ff', color2: '#c7d2fe', icon: 'assets/icon-project/car detector/Logo.png', screenshot1: 'assets/icon-project/car detector/Card 1 - Brand.png', screenshot2: 'assets/icon-project/car detector/Card 2 - Result.png', url: 'https://github.com/ry-rysa/car-detector', github: 'https://github.com/ry-rysa/car-detector',           tags: ['Machine Learning', 'Computer Vision'] },
-	{ id: 'career',      title: 'Career Prediction',    desc: "Multi-label resume classifier that\nrecommends CS job roles.\nTrained on ~4,000 resumes\nLightGBM hit 0.995 micro-F1", color1: '#f3f4f6', color2: '#e5e7eb', url: '', github: 'https://github.com/stefani-gifta/dm-CareerPrediction-2025', hideScreenshots: true, tags: ['Data Mining'] },
-	{ id: 'goose',       title: 'Goose Chatbot',        desc: 'An AI-powered chatbot that explains any AI concept in simple, everyday terms with an optional summarize feature.', color1: '#c8e6d8', color2: '#a3ccba', icon: 'assets/icon-project/goose/Logo.png', screenshot1: 'assets/icon-project/goose/Card 1 - Brand.png', screenshot2: 'assets/icon-project/goose/Card 2 - Chat.png', url: '', github: 'https://github.com/stefani-gifta/laravel11-GooSe-2025', tags: ['Web Development', 'NLP'] },
-	{ id: 'portfolio',   title: 'Portfolio',            desc: "You're already here :)\nPersonal portfolio built with react,\nThree.js, and 3D character", color1: '#f3f4f6', color2: '#e5e7eb', icon: 'assets/icon-project/icon-portfolio.png', url: 'https://github.com/ry-rysa/portfolio', github: 'https://github.com/ry-rysa/portfolio', hideScreenshots: true, tags: ['Web Development', 'UI/UX'] },
+	{ id: 'nubi',        title: 'Nubi Wallet',           desc: 'Personal finance and bill splitting app for mobile. Track your wallets, split bills with friends, manage subscriptions, and stay on top of your budget — all in one place.', stack: ['React','TypeScript', 'Go', 'PostgreSQL'], color1: '#dbeafe', color2: '#bfdbfe', icon: 'assets/icon-project/nubi/Logo - Light.png', screenshot1: 'assets/icon-project/nubi/Card 1 - Brand.png', screenshot2: 'assets/icon-project/nubi/Card 2 - Wallet.png', url: 'https://github.com/ry-rysa/nubi-wallet', github: 'https://github.com/ry-rysa/nubi-wallet', tags: ['Mobile App', 'Software Engineer', 'UI/UX'] },
+	{ id: 'debatecoach', title: 'Debate Coach Agent',   desc: 'AI-powered debate coaching platform — practice argumentation against an LLM opponent with RAG, fallacy detection, and structured feedback.', stack: ['Next.js', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL'], color1: '#ede9fe', color2: '#ddd6fe', hideScreenshots: true, url: 'https://github.com/ry-rysa/debate-coach-agent', github: 'https://github.com/ry-rysa/debate-coach-agent', tags: ['Web Development', 'NLP'] },
+	{ id: 'bahasabuddy', title: 'BahasaBuddy',          desc: "A web app for learning Indonesian regional languages through placement tests, daily lessons, and self-paced practice.",          stack: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Web Speech API'], color1: '#d1fae5', color2: '#a7f3d0', icon: 'assets/icon-project/bahasabuddy/Bb Logo.png', screenshot1: 'assets/icon-project/bahasabuddy/Card 1 - Brand.png', screenshot2: 'assets/icon-project/bahasabuddy/Card 2 - Languages.png', url: 'https://github.com/robertlyon7/Bahasa-Buddy', github: 'https://github.com/robertlyon7/Bahasa-Buddy', tags: ['Web Development', 'Software Engineer', 'UI/UX'] },
+	{ id: 'cupof',       title: 'Cupof',                desc: 'A web & mobile platform connecting users over shared coffee experiences.',        stack: ['React','TypeScript', 'Vite'], color1: '#fce7f3', color2: '#fbcfe8', url: '', github: 'https://github.com/ry-rysa/cupof',     tags: ['Web Development', 'Mobile App', 'Software Engineer', 'UI/UX'] },
+	{ id: 'drowsiness',  title: 'Drowsiness Detection', desc: 'Real-time driver drowsiness detection using computer vision and ML models.',      stack: ['Python', 'OpenCV', 'MediaPipe', 'SpeechRecognition', 'Pygame'], color1: '#fef9c3', color2: '#fde68a', icon: 'assets/icon-project/drowsiness detection/Logo.png', screenshot1: 'assets/icon-project/drowsiness detection/Card 1 - Brand.png', screenshot2: 'assets/icon-project/drowsiness detection/Card 2 - Metrics.png', url: 'https://github.com/ry-rysa/drowsiness-detection', github: 'https://github.com/ry-rysa/drowsiness-detection',           tags: ['Machine Learning', 'Computer Vision'] },
+	{ id: 'cardetector', title: 'Car Detector',         desc: 'Detects and classifies car models from images using deep learning.',              stack: ['Python', 'Flask', 'TensorFlow/Keras', 'HTML', 'CSS', 'JavaScript'], color1: '#e0e7ff', color2: '#c7d2fe', icon: 'assets/icon-project/car detector/Logo.png', screenshot1: 'assets/icon-project/car detector/Card 1 - Brand.png', screenshot2: 'assets/icon-project/car detector/Card 2 - Result.png', url: 'https://github.com/ry-rysa/car-detector', github: 'https://github.com/ry-rysa/car-detector',           tags: ['Machine Learning', 'Computer Vision'] },
+	{ id: 'goose',       title: 'Goose Chatbot',        desc: 'An AI-powered chatbot that explains any AI concept in simple, everyday terms with an optional summarize feature.', stack: ['Laravel', 'Python'], color1: '#c8e6d8', color2: '#a3ccba', icon: 'assets/icon-project/goose/Logo.png', screenshot1: 'assets/icon-project/goose/Card 1 - Brand.png', screenshot2: 'assets/icon-project/goose/Card 2 - Chat.png', url: '', github: 'https://github.com/stefani-gifta/laravel11-GooSe-2025', tags: ['Web Development', 'NLP'] },
+	{ id: 'career',      title: 'Career Prediction',    desc: "Multi-label resume classifier that\nrecommends CS job roles.\nTrained on ~4,000 resumes\nLightGBM hit 0.995 micro-F1", stack: ['Python'], color1: '#f3f4f6', color2: '#e5e7eb', url: '', github: 'https://github.com/stefani-gifta/dm-CareerPrediction-2025', hideScreenshots: true, tags: ['Data Mining'] },
+	{ id: 'portfolio',   title: 'Portfolio',            desc: "You're already here :)\nPersonal portfolio built with react,\nThree.js, and 3D character", stack: ['React'], color1: '#f3f4f6', color2: '#e5e7eb', icon: 'assets/icon-project/icon-portfolio.png', url: 'https://github.com/ry-rysa/portfolio', github: 'https://github.com/ry-rysa/portfolio', hideScreenshots: true, tags: ['Web Development', 'UI/UX'] },
 ];
 
 const ALL_TAGS = ['All', 'Mobile App', 'Web Development', 'Software Engineer', 'UI/UX', 'Machine Learning', 'Computer Vision', 'Data Mining', 'NLP'];
 
 const ICON_SIZE   = 128;
 const ICON_RADIUS = 28;
-const ITEM_GAP    = 180;
+const ITEM_GAP    = 90;
 const ITEM_W      = 210;
 
 const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inView, index, isMobile }) => {
@@ -138,6 +139,24 @@ const ProjectCard = ({ item, isBlurred, isHovered, onEnter, onLeave, onTap, inVi
 						color: 'var(--ink)', textAlign: 'center',
 						letterSpacing: '-0.01em', marginBottom: isMobile ? 5 : 7,
 					}}>{item.title}</div>
+
+					{/* Tech stack pills */}
+					{item.stack && item.stack.length > 0 && (
+						<div style={{
+							display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6,
+							marginBottom: isMobile ? 8 : 10,
+						}}>
+							{item.stack.map(tech => (
+								<span key={tech} style={{
+									fontFamily: 'var(--sans)', fontSize: isMobile ? 10 : 11, fontWeight: 500,
+									color: 'var(--mute)', background: 'var(--surface)',
+									border: '1px solid var(--rule)', borderRadius: 999,
+									padding: isMobile ? '3px 8px' : '4px 10px',
+									whiteSpace: 'nowrap',
+								}}>{tech}</span>
+							))}
+						</div>
+					)}
 
 					{/* Description */}
 					<div style={{
@@ -289,7 +308,7 @@ const Projects = () => {
 				<div ref={gridRef} style={{
 					display: 'grid',
 					gridTemplateColumns: isTablet ? 'repeat(2, 1fr)' : `repeat(3, ${ITEM_W}px)`,
-					gap: isTablet ? '40px 20px' : `96px ${ITEM_GAP}px`,
+					gap: isTablet ? '32px 16px' : `56px ${ITEM_GAP}px`,
 					justifyContent: 'center',
 					minHeight: isTablet ? undefined : 600,
 					alignContent: 'flex-start',

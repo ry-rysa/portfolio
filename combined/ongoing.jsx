@@ -15,14 +15,6 @@ const ONGOING_WORK = [
 		image: 'assets/Ongoing work/InsuranceRAG.png',
 		gradient: 'radial-gradient(ellipse at 60% 40%, #dfe1e5 0%, #c8ccd2 60%, #b8bcc4 100%)',
 	},
-	{
-		id: 'c',
-		title: 'Debate Coach Agent',
-		role: 'Agent · RAG',
-		desc: 'A document-grounded AI debate coach that engages users in real-time debates and provides personalized feedback.',
-		image: 'assets/Ongoing work/AgentDebate.png',
-		gradient: 'radial-gradient(ellipse at 45% 55%, #e8e9ec 0%, #d4d6da 60%, #c0c3c8 100%)',
-	},
 ];
 
 const OngoingCard = ({ item, index }) => {
@@ -163,7 +155,7 @@ const OngoingWork = () => {
 	const { isMobile, isTablet } = useResponsive();
 	const [headingRef, headingInView] = useInView(0.3);
 	const [cardsRef,   cardsInView]   = useInView(0.05);
-	const gridCols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 380px)';
+	const gridCols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : `repeat(${ONGOING_WORK.length}, 380px)`;
 	const topPad   = isMobile ? '60px' : isTablet ? '80px' : '100px';
 	const sidePad  = isMobile ? '20px' : isTablet ? '32px' : '54px';
 
